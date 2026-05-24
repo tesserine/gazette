@@ -2,26 +2,49 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/beat.schema.json",
   "title": "Beat",
-  "description": "Validates a beat artifact — the grounded scope and source map for one Gazette issue. Produced by survey; consumed by report, edit, and publish.",
+  "description": "Validates a beat artifact — the grounded scope and assessed source map for one Gazette issue. Produced by survey; consumed by report, edit, and publish.",
   "type": "object",
   "required": ["issue_id", "scope", "corpus_map", "inherited_threads"],
   "additionalProperties": false,
   "properties": {
     "issue_id": { "type": "string", "minLength": 1, "description": "Echoes brief.issue_id — the issue this beat scopes." },
     "scope": { "type": "string", "minLength": 1, "description": "The grounded, bounded scope of this issue — refined from brief.scope_intent against what the corpus actually supports." },
-    "corpus_map": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source-ref" }, "description": "The reachable historical sources, each assessed." },
+    "corpus_map": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source-ref" }, "description": "The reachable historical sources, each assessed for the weight it can bear. Includes both sources named in the brief and sources discovered by following trails outward." },
     "inherited_threads": { "type": "array", "items": { "$ref": "#/$defs/thread" }, "description": "Open threads carried forward from the prior issue's ledger. Empty for the first issue." },
-    "corpus_gaps": { "type": "array", "items": { "type": "string" }, "description": "Parts of the intended scope the corpus does not support — honest gaps." }
+    "corpus_gaps": { "type": "array", "items": { "$ref": "#/$defs/corpus-gap" }, "description": "Parts of the intended scope the corpus does not support — honest gaps. A gap marked materially relevant is a candidate for archive-gap reporting downstream." }
   },
   "$defs": {
     "source-ref": {
       "type": "object",
-      "required": ["locator", "description"],
+      "required": ["locator", "description", "assessment"],
       "additionalProperties": false,
       "properties": {
         "locator": { "type": "string", "minLength": 1, "description": "Where the source is — a path, URL, or reference." },
         "description": { "type": "string", "minLength": 1, "description": "What the source is and what it covers." },
-        "kind": { "type": "string", "description": "Optional classification of the source." }
+        "kind": { "type": "string", "description": "Optional classification of the source — e.g. git-history, issue-tracker, orientation-doc, deployment-record." },
+        "assessment": { "$ref": "#/$defs/source-assessment", "description": "Practical quality context so downstream protocols can judge how much weight this source can bear." },
+        "discovered_from": { "type": "string", "description": "When this source was reached by following a trail rather than named in the brief, the locator of the source that led here. Makes discovered trails auditable." }
+      }
+    },
+    "source-assessment": {
+      "type": "object",
+      "required": ["reliability", "freshness", "completeness"],
+      "additionalProperties": false,
+      "properties": {
+        "reliability": { "type": "string", "enum": ["primary", "secondary", "unverified"], "description": "primary = an authoritative first-hand record (a commit, a tracker entry); secondary = a derived or summarizing record; unverified = provenance not established." },
+        "freshness": { "type": "string", "enum": ["current", "aging", "stale", "unknown"], "description": "How current the source is relative to the issue's scope window." },
+        "completeness": { "type": "string", "enum": ["full", "partial", "fragmentary"], "description": "How completely the source covers what it purports to cover." },
+        "ownership": { "type": "string", "description": "Who owns or authored the source, when known — e.g. a repository, an account, a system." }
+      }
+    },
+    "corpus-gap": {
+      "type": "object",
+      "required": ["description", "material"],
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string", "minLength": 1, "description": "What part of the intended scope the corpus cannot support." },
+        "material": { "type": "boolean", "description": "True when the gap is materially relevant to the chronicle — significant enough to be worth reporting as an archive-gap story rather than merely noted." },
+        "gap_evidence": { "type": "string", "description": "When material, the evidence that the gap exists — e.g. a development visible in one source with no corresponding record in another." }
       }
     },
     "thread": {

@@ -2,26 +2,38 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/issue.schema.json",
   "title": "Issue",
-  "description": "Validates an issue artifact — the published newspaper issue and its coverage report. Produced by publish; terminal (the methodology's deliverable).",
+  "description": "Validates an issue artifact — the published newspaper issue. Grounded facts, declared uncertainties, omissions, and archive gaps are each distinguishable. Produced by publish; terminal.",
   "type": "object",
   "required": ["issue_id", "title", "published_stories", "coverage_report", "publication_target"],
   "additionalProperties": false,
   "properties": {
     "issue_id": { "type": "string", "minLength": 1, "description": "The issue identifier." },
     "title": { "type": "string", "minLength": 1, "description": "The issue's masthead title." },
-    "published_stories": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/published-story" }, "description": "The final stories as published — carrying only claims grounding marked supported." },
-    "coverage_report": { "$ref": "#/$defs/coverage-report", "description": "Committed-versus-published accounting for the issue." },
+    "published_stories": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/published-story" }, "description": "The final stories as published — development stories and archive-gap stories. Every claim carries a source; no claim grounding marked unsupported appears." },
+    "coverage_report": { "$ref": "#/$defs/coverage-report", "description": "Committed-versus-published accounting, including which stories report developments and which report archive gaps." },
     "publication_target": { "type": "string", "minLength": 1, "description": "Where this issue was emitted — echoes brief.publication_target." }
   },
   "$defs": {
     "published-story": {
       "type": "object",
-      "required": ["candidate_id", "headline", "body"],
+      "required": ["candidate_id", "kind", "headline", "body"],
       "additionalProperties": false,
       "properties": {
         "candidate_id": { "type": "string", "minLength": 1, "description": "The candidate this story reports — traces to lineup and dispatch." },
+        "kind": { "type": "string", "enum": ["development", "archive_gap"], "description": "development = a reported development. archive_gap = a reported materially relevant silence in the record. A reader can distinguish the two." },
         "headline": { "type": "string", "minLength": 1, "description": "The published headline." },
-        "body": { "type": "string", "minLength": 1, "description": "The published story prose." }
+        "body": { "type": "string", "minLength": 1, "description": "The published story prose." },
+        "qualified_claims": { "type": "array", "items": { "$ref": "#/$defs/qualified-claim" }, "description": "The story's claims that were published as qualified rather than firm — surfaced here so a reader can see, per story, which assertions are hedged and what their stated limits are. Empty or absent when every claim in the story is firm." }
+      }
+    },
+    "qualified-claim": {
+      "type": "object",
+      "required": ["claim_id", "statement", "limits"],
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": { "type": "string", "minLength": 1, "description": "The draft claim this entry corresponds to." },
+        "statement": { "type": "string", "minLength": 1, "description": "The hedged assertion as published." },
+        "limits": { "type": "string", "minLength": 1, "description": "What the source does not establish — the declared limit of the claim." }
       }
     },
     "coverage-report": {
@@ -32,7 +44,8 @@
         "committed": { "type": "array", "items": { "type": "string" }, "description": "The candidate_ids the lineup selected to run." },
         "published": { "type": "array", "items": { "type": "string" }, "description": "The candidate_ids actually published in this issue." },
         "omitted": { "type": "array", "items": { "$ref": "#/$defs/omission" }, "description": "Candidates not run, carried from the lineup." },
-        "unresolved": { "type": "array", "items": { "type": "string" }, "description": "Candidates committed but not published. Should be empty; a non-empty list is the coverage red signal." }
+        "unresolved": { "type": "array", "items": { "type": "string" }, "description": "Candidates committed but not published. Should be empty; a non-empty list is the coverage red signal." },
+        "archive_gaps_reported": { "type": "array", "items": { "type": "string" }, "description": "The candidate_ids of published stories whose kind is archive_gap — the issue's explicit account of where the record was found wanting." }
       }
     },
     "omission": {

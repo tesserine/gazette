@@ -9,7 +9,7 @@
   "properties": {
     "issue_id": { "type": "string", "minLength": 1, "description": "The issue this grounding verifies." },
     "claim_verdicts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/verdict" }, "description": "One verdict for every claim in the draft." },
-    "unsupported_count": { "type": "integer", "minimum": 0, "description": "The number of claims with an unsupported verdict — the grounding red-signal scalar. Must equal the count of unsupported verdicts." }
+    "unsupported_count": { "type": "integer", "minimum": 0, "description": "The number of claims with an unsupported verdict — the grounding red-signal scalar. Must equal the count of unsupported verdicts. Partially-supported claims are not counted here; they are publishable when honestly qualified." }
   },
   "$defs": {
     "verdict": {
@@ -18,9 +18,9 @@
       "additionalProperties": false,
       "properties": {
         "claim_id": { "type": "string", "minLength": 1, "description": "The draft claim this verdict judges." },
-        "status": { "type": "string", "enum": ["supported", "unsupported"], "description": "Whether the cited source actually supports the claim's statement." },
+        "status": { "type": "string", "enum": ["supported", "partially_supported", "unsupported"], "description": "supported = the cited source fully supports the statement. partially_supported = the source supports the statement only in part or indirectly — publishable only if the draft claim is declared 'qualified' with stated limits. unsupported = the source does not support the statement — must not be published." },
         "checked_against": { "type": "string", "minLength": 1, "description": "The source examined to reach this verdict." },
-        "note": { "type": "string", "description": "Optional explanation of the verdict." }
+        "note": { "type": "string", "description": "Optional explanation of the verdict. For a partially_supported verdict, states what the source does and does not establish." }
       }
     }
   }

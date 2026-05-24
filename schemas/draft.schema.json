@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/draft.schema.json",
   "title": "Draft",
-  "description": "Validates a draft artifact — the written reported stories of an issue. Produced by write; consumed by factcheck and publish.",
+  "description": "Validates a draft artifact — the written reported stories of an issue, each claim attributed and its confidence declared. Produced by write; consumed by factcheck and publish.",
   "type": "object",
   "required": ["issue_id", "stories"],
   "additionalProperties": false,
@@ -13,23 +13,26 @@
   "$defs": {
     "story": {
       "type": "object",
-      "required": ["candidate_id", "headline", "body", "claims"],
+      "required": ["candidate_id", "kind", "headline", "body", "claims"],
       "additionalProperties": false,
       "properties": {
         "candidate_id": { "type": "string", "minLength": 1, "description": "The dispatch candidate this story reports — the traceability link to lineup and dispatch." },
+        "kind": { "type": "string", "enum": ["development", "archive_gap"], "description": "Echoes the candidate's kind. An archive_gap story reports a materially relevant silence in the record." },
         "headline": { "type": "string", "minLength": 1, "description": "The story's headline." },
         "body": { "type": "string", "minLength": 1, "description": "The reported story prose." },
-        "claims": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/claim" }, "description": "The factual claims the story asserts, each attributed to a source." }
+        "claims": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/claim" }, "description": "The factual claims the story asserts, each attributed to a source. For an archive_gap story, the claims assert the existence and extent of the gap, grounded in the evidence of absence." }
       }
     },
     "claim": {
       "type": "object",
-      "required": ["claim_id", "statement", "source_locator"],
+      "required": ["claim_id", "statement", "source_locator", "confidence"],
       "additionalProperties": false,
       "properties": {
         "claim_id": { "type": "string", "minLength": 1, "description": "Stable identifier, referenced by grounding verdicts." },
         "statement": { "type": "string", "minLength": 1, "description": "The factual assertion the story makes." },
-        "source_locator": { "type": "string", "minLength": 1, "description": "The corpus source this claim rests on." }
+        "source_locator": { "type": "string", "minLength": 1, "description": "The corpus source this claim rests on. The grounding floor: every claim — firm or qualified — carries a source. Confidence never substitutes for a source." },
+        "confidence": { "type": "string", "enum": ["firm", "qualified"], "description": "firm = the source fully supports the statement as asserted. qualified = the source supports the statement only partially or indirectly; the statement is hedged and its limits are stated. Confidence declares the strength of the grounding; it never excuses its absence." },
+        "limits": { "type": "string", "description": "Required in spirit whenever confidence is 'qualified': what the source does not establish, so the uncertainty is visible to the reader rather than hidden. Omitted for a firm claim." }
       }
     }
   }

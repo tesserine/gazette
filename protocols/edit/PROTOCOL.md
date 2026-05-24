@@ -2,7 +2,8 @@
 name: edit
 description: >-
   Exercises editorial judgment over an issue: selects which story candidates
-  run, names which are omitted and why, and records the coverage rationale.
+  run — developments and archive gaps alike — names which are omitted and why,
+  and records the coverage rationale.
 ---
 
 # Edit
@@ -20,9 +21,10 @@ left silent.
 
 **Given** a `beat` and a `dispatch`,
 **when** edit runs,
-**then** it produces a `lineup` in which every dispatch candidate is accounted
-for as either `selected` or `omitted`, the selection sits within the beat's
-`scope`, and each omission carries an honest reason and disposition.
+**then** it produces a `lineup` in which every dispatch candidate — every
+`development` and every `archive_gap` — is accounted for as either `selected`
+or `omitted`, the selection sits within the beat's `scope`, and each omission
+carries an honest reason and disposition.
 
 ## Goal
 
@@ -33,11 +35,18 @@ what was deliberately set aside.
 ## Discipline
 
 Select the candidates that best serve the issue's `scope` and the chronicle's
-continuity. Every candidate in the dispatch that is not selected must appear
-in `omitted` with a `reason` and a `disposition`: `deferred` — a live thread
-for a future issue, tagged with a `thread_id` — or `dropped`. No candidate is
-left unaccounted for. `coverage_rationale` states the judgment behind the
-selection and its balance.
+continuity. An `archive_gap` candidate is weighed on the same editorial
+footing as a `development`: a material gap can be the right thing to run, and a
+gap candidate is judged by its relevance, not set aside merely for being a gap.
+A run made thin by a sparse corpus is honestly reported as such — including,
+where apt, by running the archive-gap stories that say so — rather than padded
+with weak developments.
+
+Every candidate in the dispatch that is not selected must appear in `omitted`
+with a `reason` and a `disposition`: `deferred` — a live thread for a future
+issue, tagged with a `thread_id` — or `dropped`. No candidate is left
+unaccounted for. `coverage_rationale` states the judgment behind the selection
+and its balance, including the balance between developments and archive gaps.
 
 ## Red and Green Signals
 
@@ -45,9 +54,9 @@ selection and its balance.
   `omitted` array present, a `coverage_rationale`.
 - **Red (mechanical):** an empty `selected` array.
 - **Red (methodological):** a dispatch candidate that appears in neither
-  `selected` nor `omitted` — a silent drop. Schema validation cannot compare
-  the lineup against the dispatch; `publish`'s coverage report and review
-  catch it.
+  `selected` nor `omitted` — a silent drop; an archive-gap candidate dismissed
+  without an honest reason. Schema validation cannot compare the lineup
+  against the dispatch; `publish`'s coverage report and review catch it.
 
 ## Delivering the lineup
 

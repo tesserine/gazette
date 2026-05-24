@@ -47,5 +47,28 @@ edge; it is an orchestrator-carried baton.
 | `schemas/` | JSON Schema contract for each of the eight artifact types |
 | `protocols/` | Six protocol definitions, one per stage |
 
-v1 ships no skills. For how a runa methodology is structured, see runa's
+## Reporting under imperfect archives (v0.2)
+
+A chronicle rarely meets a tidy archive. Gazette v0.2 is built to report
+honestly from an incomplete or messy record:
+
+- **Source discovery** — `survey` follows trails outward from the brief's
+  initial pointers (git history, trackers, orientations, live substrate),
+  recording where each discovered source was reached from.
+- **Source quality** — every source in the `corpus_map` carries an
+  `assessment` of reliability, freshness, and completeness, so later
+  protocols know how much weight it can bear.
+- **Declared uncertainty** — a claim the record only partially supports is
+  published as a `qualified` claim with its `limits` stated, never as a firm
+  fact and never without a source. The grounding floor is absolute: every
+  claim carries a source trail.
+- **Archive gaps as news** — when the record is materially silent on
+  something a reader would expect, that silence can become an `archive_gap`
+  story, grounded in the evidence of absence. The newspaper reports the state
+  of the archive, not only the state of the project.
+
+This makes Gazette an observability instrument as much as a publication: its
+output shows what the surrounding system preserves, misses, and cannot ground.
+
+v0.2 ships no skills. For how a runa methodology is structured, see runa's
 [methodology authoring guide](https://github.com/tesserine/runa/blob/main/docs/methodology-authoring-guide.md).

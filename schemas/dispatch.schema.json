@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/dispatch.schema.json",
   "title": "Dispatch",
-  "description": "Validates a dispatch artifact — the grounded story candidates mined from the corpus. Produced by report; consumed by edit, write, and factcheck.",
+  "description": "Validates a dispatch artifact — the grounded story candidates mined from the corpus, including archive-gap candidates. Produced by report; consumed by edit, write, and factcheck.",
   "type": "object",
   "required": ["issue_id", "candidates"],
   "additionalProperties": false,
@@ -13,13 +13,14 @@
   "$defs": {
     "candidate": {
       "type": "object",
-      "required": ["candidate_id", "headline", "summary", "source_trail"],
+      "required": ["candidate_id", "kind", "headline", "summary", "source_trail"],
       "additionalProperties": false,
       "properties": {
         "candidate_id": { "type": "string", "minLength": 1, "description": "Stable identifier, referenced by lineup, draft, and the issue coverage report." },
-        "headline": { "type": "string", "minLength": 1, "description": "Provisional headline — what the development is." },
-        "summary": { "type": "string", "minLength": 1, "description": "What happened — the development in brief." },
-        "source_trail": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source-citation" }, "description": "The records supporting this candidate. Grounding begins here — a candidate with no source trail is invalid." },
+        "kind": { "type": "string", "enum": ["development", "archive_gap"], "description": "development = something that happened, mined from the record. archive_gap = a materially relevant silence in the record — the absence is itself the story." },
+        "headline": { "type": "string", "minLength": 1, "description": "Provisional headline — what the development is, or what the record fails to show." },
+        "summary": { "type": "string", "minLength": 1, "description": "For a development: what happened. For an archive_gap: what the record does not show and why that matters." },
+        "source_trail": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source-citation" }, "description": "The records supporting this candidate. The grounding floor: every candidate, including an archive_gap, carries a non-empty source trail. For a development the trail cites the records of what happened; for an archive_gap the trail cites the evidence that the gap exists — a record present in one place with no corresponding record where one was expected." },
         "thread_id": { "type": "string", "description": "If this candidate continues an inherited thread, the thread's id." }
       }
     },
@@ -28,8 +29,8 @@
       "required": ["locator", "excerpt_or_detail"],
       "additionalProperties": false,
       "properties": {
-        "locator": { "type": "string", "minLength": 1, "description": "Where the supporting record is." },
-        "excerpt_or_detail": { "type": "string", "minLength": 1, "description": "The specific content in that record that supports the candidate." }
+        "locator": { "type": "string", "minLength": 1, "description": "Where the supporting record is. For an archive_gap, the locator of the record whose absence — or whose unanswered counterpart — constitutes the evidence." },
+        "excerpt_or_detail": { "type": "string", "minLength": 1, "description": "The specific content that supports the candidate. For an archive_gap, the specific observation of absence — what was looked for and not found." }
       }
     }
   }
