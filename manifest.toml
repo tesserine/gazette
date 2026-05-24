@@ -1,0 +1,85 @@
+# Gazette Methodology Manifest
+#
+# runa reads this file to understand the gazette methodology.
+# Topology emerges from the graph of requires/produces relationships.
+#
+# Gazette carries a periodical chronicle through its lifecycle: from an
+# editorial commission, through mining a historical record and reporting
+# grounded stories, through editorial selection, writing, and verification
+# of grounding, to a published newspaper issue — and forward, issue over
+# issue, with continuity maintained.
+#
+# Every protocol is unscoped: one Gazette issue is one runa run in its own
+# workspace. No artifact schema requires `work_unit`.
+
+name = "gazette"
+version = "0.1.0"
+
+# --- Artifact Types ---
+
+[[artifact_types]]
+name = "brief"
+
+[[artifact_types]]
+name = "beat"
+
+[[artifact_types]]
+name = "dispatch"
+
+[[artifact_types]]
+name = "lineup"
+
+[[artifact_types]]
+name = "draft"
+
+[[artifact_types]]
+name = "grounding"
+
+[[artifact_types]]
+name = "issue"
+
+[[artifact_types]]
+name = "ledger"
+
+# --- Protocols ---
+#
+# brief -> survey -> report -> edit -> write -> factcheck -> publish
+#                                                              |
+#                                                       issue + ledger
+
+[[protocols]]
+name = "survey"
+requires = ["brief"]
+accepts  = ["ledger"]
+produces = ["beat"]
+trigger  = { type = "on_artifact", name = "brief" }
+
+[[protocols]]
+name = "report"
+requires = ["beat"]
+produces = ["dispatch"]
+trigger  = { type = "on_artifact", name = "beat" }
+
+[[protocols]]
+name = "edit"
+requires = ["beat", "dispatch"]
+produces = ["lineup"]
+trigger  = { type = "on_artifact", name = "dispatch" }
+
+[[protocols]]
+name = "write"
+requires = ["lineup", "dispatch"]
+produces = ["draft"]
+trigger  = { type = "on_artifact", name = "lineup" }
+
+[[protocols]]
+name = "factcheck"
+requires = ["draft", "dispatch"]
+produces = ["grounding"]
+trigger  = { type = "on_artifact", name = "draft" }
+
+[[protocols]]
+name = "publish"
+requires = ["draft", "grounding", "lineup", "beat"]
+produces = ["issue", "ledger"]
+trigger  = { type = "on_artifact", name = "grounding" }

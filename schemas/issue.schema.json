@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/issue.schema.json",
+  "title": "Issue",
+  "description": "Validates an issue artifact — the published newspaper issue and its coverage report. Produced by publish; terminal (the methodology's deliverable).",
+  "type": "object",
+  "required": ["issue_id", "title", "published_stories", "coverage_report", "publication_target"],
+  "additionalProperties": false,
+  "properties": {
+    "issue_id": { "type": "string", "minLength": 1, "description": "The issue identifier." },
+    "title": { "type": "string", "minLength": 1, "description": "The issue's masthead title." },
+    "published_stories": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/published-story" }, "description": "The final stories as published — carrying only claims grounding marked supported." },
+    "coverage_report": { "$ref": "#/$defs/coverage-report", "description": "Committed-versus-published accounting for the issue." },
+    "publication_target": { "type": "string", "minLength": 1, "description": "Where this issue was emitted — echoes brief.publication_target." }
+  },
+  "$defs": {
+    "published-story": {
+      "type": "object",
+      "required": ["candidate_id", "headline", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1, "description": "The candidate this story reports — traces to lineup and dispatch." },
+        "headline": { "type": "string", "minLength": 1, "description": "The published headline." },
+        "body": { "type": "string", "minLength": 1, "description": "The published story prose." }
+      }
+    },
+    "coverage-report": {
+      "type": "object",
+      "required": ["committed", "published", "omitted"],
+      "additionalProperties": false,
+      "properties": {
+        "committed": { "type": "array", "items": { "type": "string" }, "description": "The candidate_ids the lineup selected to run." },
+        "published": { "type": "array", "items": { "type": "string" }, "description": "The candidate_ids actually published in this issue." },
+        "omitted": { "type": "array", "items": { "$ref": "#/$defs/omission" }, "description": "Candidates not run, carried from the lineup." },
+        "unresolved": { "type": "array", "items": { "type": "string" }, "description": "Candidates committed but not published. Should be empty; a non-empty list is the coverage red signal." }
+      }
+    },
+    "omission": {
+      "type": "object",
+      "required": ["candidate_id", "reason", "disposition"],
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1, "description": "The candidate not run." },
+        "reason": { "type": "string", "minLength": 1, "description": "Why it was not run." },
+        "disposition": { "type": "string", "enum": ["deferred", "dropped"], "description": "deferred = a live thread for a future issue; dropped = not pursued further." },
+        "thread_id": { "type": "string", "description": "When deferred, the thread id under which it carries forward." }
+      }
+    }
+  }
+}

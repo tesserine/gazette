@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/ledger.schema.json",
+  "title": "Ledger",
+  "description": "Validates a ledger artifact — the chronicle's running continuity state. Produced by publish as a singleton (instance_id 'ledger'); carried by the orchestrator into the next issue's workspace as survey's continuity input. Periodical-level: carries no issue_id and no work_unit.",
+  "type": "object",
+  "required": ["chronicle", "last_issue", "issues_published", "open_threads", "covered"],
+  "additionalProperties": false,
+  "properties": {
+    "chronicle": { "type": "string", "minLength": 1, "description": "What chronicle this ledger tracks." },
+    "last_issue": { "type": "string", "minLength": 1, "description": "issue_id of the most recently published issue." },
+    "issues_published": { "type": "array", "minItems": 1, "items": { "type": "string" }, "description": "All issue_ids published so far, in order." },
+    "open_threads": { "type": "array", "items": { "$ref": "#/$defs/thread" }, "description": "Threads still open — inherited-and-still-open threads plus this issue's deferrals. May be empty." },
+    "covered": { "type": "array", "items": { "$ref": "#/$defs/covered-entry" }, "description": "What the chronicle has reported so far, so the next issue does not re-report it." }
+  },
+  "$defs": {
+    "thread": {
+      "type": "object",
+      "required": ["thread_id", "summary", "origin_issue"],
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": { "type": "string", "minLength": 1, "description": "Stable identifier for the thread across issues." },
+        "summary": { "type": "string", "minLength": 1, "description": "What the open thread is." },
+        "origin_issue": { "type": "string", "minLength": 1, "description": "issue_id where the thread was opened." }
+      }
+    },
+    "covered-entry": {
+      "type": "object",
+      "required": ["candidate_id", "issue_id", "headline"],
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1, "description": "The candidate that was reported." },
+        "issue_id": { "type": "string", "minLength": 1, "description": "The issue it ran in." },
+        "headline": { "type": "string", "minLength": 1, "description": "The headline it ran under." }
+      }
+    }
+  }
+}

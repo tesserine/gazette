@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/beat.schema.json",
+  "title": "Beat",
+  "description": "Validates a beat artifact — the grounded scope and source map for one Gazette issue. Produced by survey; consumed by report, edit, and publish.",
+  "type": "object",
+  "required": ["issue_id", "scope", "corpus_map", "inherited_threads"],
+  "additionalProperties": false,
+  "properties": {
+    "issue_id": { "type": "string", "minLength": 1, "description": "Echoes brief.issue_id — the issue this beat scopes." },
+    "scope": { "type": "string", "minLength": 1, "description": "The grounded, bounded scope of this issue — refined from brief.scope_intent against what the corpus actually supports." },
+    "corpus_map": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source-ref" }, "description": "The reachable historical sources, each assessed." },
+    "inherited_threads": { "type": "array", "items": { "$ref": "#/$defs/thread" }, "description": "Open threads carried forward from the prior issue's ledger. Empty for the first issue." },
+    "corpus_gaps": { "type": "array", "items": { "type": "string" }, "description": "Parts of the intended scope the corpus does not support — honest gaps." }
+  },
+  "$defs": {
+    "source-ref": {
+      "type": "object",
+      "required": ["locator", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "locator": { "type": "string", "minLength": 1, "description": "Where the source is — a path, URL, or reference." },
+        "description": { "type": "string", "minLength": 1, "description": "What the source is and what it covers." },
+        "kind": { "type": "string", "description": "Optional classification of the source." }
+      }
+    },
+    "thread": {
+      "type": "object",
+      "required": ["thread_id", "summary", "origin_issue"],
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": { "type": "string", "minLength": 1, "description": "Stable identifier for the thread across issues." },
+        "summary": { "type": "string", "minLength": 1, "description": "What the open thread is." },
+        "origin_issue": { "type": "string", "minLength": 1, "description": "issue_id where the thread was opened." }
+      }
+    }
+  }
+}

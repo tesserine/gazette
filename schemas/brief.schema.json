@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/brief.schema.json",
+  "title": "Brief",
+  "description": "Validates a brief artifact — the external editorial commission that opens a Gazette issue. Consumed by the survey protocol.",
+  "type": "object",
+  "required": ["issue_id", "chronicle", "scope_intent", "corpus_pointers", "publication_target"],
+  "additionalProperties": false,
+  "properties": {
+    "issue_id": { "type": "string", "minLength": 1, "description": "Identifier for this issue (e.g. 'weforge-history-001'). Establishes the issue identity echoed by every downstream artifact." },
+    "chronicle": { "type": "string", "minLength": 1, "description": "What is being chronicled (e.g. 'the history of WeForge')." },
+    "scope_intent": { "type": "string", "minLength": 1, "description": "The period or thematic scope this issue should cover." },
+    "corpus_pointers": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "description": "Where the historical record can be found — repositories, paths, URLs." },
+    "publication_target": { "type": "string", "minLength": 1, "description": "Where the finished issue should be emitted." },
+    "context": { "type": "string", "description": "Anything else the commissioner wants to include." }
+  }
+}

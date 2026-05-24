@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tesserine/gazette/main/schemas/lineup.schema.json",
+  "title": "Lineup",
+  "description": "Validates a lineup artifact — the issue plan: which candidates run, which are omitted, and the editorial rationale. Produced by edit; consumed by write and publish.",
+  "type": "object",
+  "required": ["issue_id", "selected", "omitted", "coverage_rationale"],
+  "additionalProperties": false,
+  "properties": {
+    "issue_id": { "type": "string", "minLength": 1, "description": "The issue this lineup plans." },
+    "selected": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/selection" }, "description": "The candidates that will run as stories in this issue." },
+    "omitted": { "type": "array", "items": { "$ref": "#/$defs/omission" }, "description": "Candidates explicitly not run, each with a reason. Every dispatch candidate not selected must appear here — no candidate is silently dropped." },
+    "coverage_rationale": { "type": "string", "minLength": 1, "description": "The editorial judgment behind this selection and its balance across the corpus." }
+  },
+  "$defs": {
+    "selection": {
+      "type": "object",
+      "required": ["candidate_id", "angle"],
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1, "description": "The dispatch candidate selected to run." },
+        "angle": { "type": "string", "minLength": 1, "description": "The editorial framing the story should take." },
+        "prominence": { "type": "string", "description": "Optional placement — e.g. lead, feature, brief." }
+      }
+    },
+    "omission": {
+      "type": "object",
+      "required": ["candidate_id", "reason", "disposition"],
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1, "description": "The dispatch candidate not selected." },
+        "reason": { "type": "string", "minLength": 1, "description": "Why this candidate is not running." },
+        "disposition": { "type": "string", "enum": ["deferred", "dropped"], "description": "deferred = a live thread for a future issue; dropped = not pursued further." },
+        "thread_id": { "type": "string", "description": "When deferred, the thread id under which it carries forward." }
+      }
+    }
+  }
+}
