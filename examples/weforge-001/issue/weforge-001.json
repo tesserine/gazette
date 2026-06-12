@@ -1,0 +1,56 @@
+{
+  "issue_id": "weforge-001",
+  "title": "The WeForge Gazette — Issue 001: Founding on the Record",
+  "published_stories": [
+    {
+      "candidate_id": "weforge-001-c1",
+      "kind": "development",
+      "headline": "WeForge opens its doors",
+      "body": "WeForge began as a single commit. The platform repository's initial commit bootstraps the forge's service scaffolding, and the meta tracker's first issue announces the platform live for project hosting. The chronicle starts here: a self-hosted forge, opened deliberately, with its founding visible in its own record."
+    },
+    {
+      "candidate_id": "weforge-001-c2",
+      "kind": "development",
+      "headline": "The tracker becomes the front door",
+      "body": "Service requests found their way into the meta tracker early, and the operators began steering everyone there. By the end of the launch window the tracker reads as the platform's intake path — though the record stops short of showing a stated policy. What survives is an ops-journal aside and the visible drift of requests onto the tracker.",
+      "qualified_claims": [
+        {
+          "claim_id": "weforge-001-c2-k2",
+          "statement": "Filing requests on the tracker became the platform's required intake path during the launch window.",
+          "limits": "The journal entry shows the operators asking for tracker-first requests; no policy document, announcement, or enforcement record establishes that it became required rather than preferred."
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c3",
+      "kind": "archive_gap",
+      "headline": "The May outage recovery left no record",
+      "body": "On May 12 the platform's own tracker reported an outage. Two days later the issue closed; service was back. Between those facts the record is silent: the issue carries no resolution comment, no postmortem is linked, and the ops journal — irregular at the best of times — has no entry for the entire recovery window. Whatever was done to restore WeForge lives only in operator memory. For a platform that hosts other projects' history, the first thing its own history lost was how it was saved."
+    }
+  ],
+  "coverage_report": {
+    "committed": [
+      "weforge-001-c1",
+      "weforge-001-c2",
+      "weforge-001-c3"
+    ],
+    "published": [
+      "weforge-001-c1",
+      "weforge-001-c2",
+      "weforge-001-c3"
+    ],
+    "omitted": [
+      {
+        "candidate_id": "weforge-001-c4",
+        "reason": "The CI-growth story needs usage data the current corpus does not contain; running it now would force unsupported quantitative claims.",
+        "disposition": "deferred",
+        "thread_id": "weforge-ci-growth"
+      }
+    ],
+    "unresolved": [],
+    "archive_gaps_reported": [
+      "weforge-001-c3"
+    ]
+  },
+  "publication_target": "publications/weforge-gazette/issues/001.md"
+}

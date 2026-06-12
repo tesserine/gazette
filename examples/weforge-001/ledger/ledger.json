@@ -1,0 +1,31 @@
+{
+  "chronicle": "the WeForge forge platform",
+  "last_issue": "weforge-001",
+  "issues_published": [
+    "weforge-001"
+  ],
+  "open_threads": [
+    {
+      "thread_id": "weforge-ci-growth",
+      "summary": "CI activity appears to grow sharply at the end of the launch window; quantify it once usage data exists and report it.",
+      "origin_issue": "weforge-001"
+    }
+  ],
+  "covered": [
+    {
+      "candidate_id": "weforge-001-c1",
+      "issue_id": "weforge-001",
+      "headline": "WeForge opens its doors"
+    },
+    {
+      "candidate_id": "weforge-001-c2",
+      "issue_id": "weforge-001",
+      "headline": "The tracker becomes the front door"
+    },
+    {
+      "candidate_id": "weforge-001-c3",
+      "issue_id": "weforge-001",
+      "headline": "The May outage recovery left no record"
+    }
+  ]
+}

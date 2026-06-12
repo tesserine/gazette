@@ -1,0 +1,40 @@
+{
+  "issue_id": "weforge-001",
+  "claim_verdicts": [
+    {
+      "claim_id": "weforge-001-c1-k1",
+      "status": "supported",
+      "checked_against": "git:forge/weforge.git@a1f0c3e",
+      "note": "Commit message and tree contents match the statement."
+    },
+    {
+      "claim_id": "weforge-001-c1-k2",
+      "status": "supported",
+      "checked_against": "tracker:weforge/meta#1"
+    },
+    {
+      "claim_id": "weforge-001-c2-k1",
+      "status": "supported",
+      "checked_against": "tracker:weforge/meta#7"
+    },
+    {
+      "claim_id": "weforge-001-c2-k2",
+      "status": "partially_supported",
+      "checked_against": "docs/ops-journal.md (May 2 entry)",
+      "note": "The journal establishes the request was made, not that it became required. Publishable only as the draft has it: qualified, with the limit stated."
+    },
+    {
+      "claim_id": "weforge-001-c3-k1",
+      "status": "supported",
+      "checked_against": "tracker:weforge/meta#41",
+      "note": "Evidence of absence verified: closure without resolution comment, no linked postmortem."
+    },
+    {
+      "claim_id": "weforge-001-c3-k2",
+      "status": "supported",
+      "checked_against": "docs/ops-journal.md",
+      "note": "Entry dates confirm the May 12–27 silence."
+    }
+  ],
+  "unsupported_count": 0
+}

@@ -1,0 +1,66 @@
+{
+  "issue_id": "weforge-001",
+  "stories": [
+    {
+      "candidate_id": "weforge-001-c1",
+      "kind": "development",
+      "headline": "WeForge opens its doors",
+      "body": "WeForge began as a single commit. The platform repository's initial commit bootstraps the forge's service scaffolding, and the meta tracker's first issue announces the platform live for project hosting. The chronicle starts here: a self-hosted forge, opened deliberately, with its founding visible in its own record.",
+      "claims": [
+        {
+          "claim_id": "weforge-001-c1-k1",
+          "statement": "The WeForge platform repository's initial commit bootstrapped the forge's service scaffolding.",
+          "source_locator": "git:forge/weforge.git@a1f0c3e",
+          "confidence": "firm"
+        },
+        {
+          "claim_id": "weforge-001-c1-k2",
+          "statement": "The launch was announced on the platform's own meta tracker.",
+          "source_locator": "tracker:weforge/meta#1",
+          "confidence": "firm"
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c2",
+      "kind": "development",
+      "headline": "The tracker becomes the front door",
+      "body": "Service requests found their way into the meta tracker early, and the operators began steering everyone there. By the end of the launch window the tracker reads as the platform's intake path — though the record stops short of showing a stated policy. What survives is an ops-journal aside and the visible drift of requests onto the tracker.",
+      "claims": [
+        {
+          "claim_id": "weforge-001-c2-k1",
+          "statement": "Service requests began arriving as tracker issues during the launch window.",
+          "source_locator": "tracker:weforge/meta#7",
+          "confidence": "firm"
+        },
+        {
+          "claim_id": "weforge-001-c2-k2",
+          "statement": "Filing requests on the tracker became the platform's required intake path during the launch window.",
+          "source_locator": "docs/ops-journal.md (May 2 entry)",
+          "confidence": "qualified",
+          "limits": "The journal entry shows the operators asking for tracker-first requests; no policy document, announcement, or enforcement record establishes that it became required rather than preferred."
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c3",
+      "kind": "archive_gap",
+      "headline": "The May outage recovery left no record",
+      "body": "On May 12 the platform's own tracker reported an outage. Two days later the issue closed; service was back. Between those facts the record is silent: the issue carries no resolution comment, no postmortem is linked, and the ops journal — irregular at the best of times — has no entry for the entire recovery window. Whatever was done to restore WeForge lives only in operator memory. For a platform that hosts other projects' history, the first thing its own history lost was how it was saved.",
+      "claims": [
+        {
+          "claim_id": "weforge-001-c3-k1",
+          "statement": "The May 12 outage issue was closed without a resolution comment and links to no postmortem.",
+          "source_locator": "tracker:weforge/meta#41",
+          "confidence": "firm"
+        },
+        {
+          "claim_id": "weforge-001-c3-k2",
+          "statement": "The operations journal contains no entries between May 12 and May 27, leaving the recovery window unrecorded.",
+          "source_locator": "docs/ops-journal.md",
+          "confidence": "firm"
+        }
+      ]
+    }
+  ]
+}
