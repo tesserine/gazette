@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- README hero rewritten for the ecosystem README pass: gazette positioned as
+  the existence proof that methodologies generalize beyond code, with the
+  grounding floor, qualified claims, and archive-gaps-as-news discipline
+  surfaced up front; the source-of-truth map linked directly.
+
 ### Added
 
 - `examples/weforge-001/` — a complete worked issue: input brief and every
