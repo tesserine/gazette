@@ -1,0 +1,65 @@
+{
+  "issue_id": "weforge-001",
+  "candidates": [
+    {
+      "candidate_id": "weforge-001-c1",
+      "kind": "development",
+      "headline": "WeForge opens its doors",
+      "summary": "The platform repository's initial commit and the tracker's launch announcement establish the launch of WeForge as a self-hosted forge.",
+      "source_trail": [
+        {
+          "locator": "git:forge/weforge.git@a1f0c3e",
+          "excerpt_or_detail": "Initial commit 'feat: bootstrap weforge platform' introducing the service scaffolding."
+        },
+        {
+          "locator": "tracker:weforge/meta#1",
+          "excerpt_or_detail": "Launch announcement: 'WeForge is live for project hosting.'"
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c2",
+      "kind": "development",
+      "headline": "The tracker becomes the front door",
+      "summary": "Within the launch window, service requests move into the meta tracker; the ops journal implies this became the required intake path, though no policy record states it.",
+      "source_trail": [
+        {
+          "locator": "tracker:weforge/meta#7",
+          "excerpt_or_detail": "First service request filed as a tracker issue rather than out-of-band."
+        },
+        {
+          "locator": "docs/ops-journal.md (May 2 entry)",
+          "excerpt_or_detail": "'Asking everyone to file requests on the tracker from now on.'"
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c3",
+      "kind": "archive_gap",
+      "headline": "The May outage recovery left no record",
+      "summary": "The record shows an outage was reported and that service resumed, but nothing records how. The recovery procedure exists only in operator memory.",
+      "source_trail": [
+        {
+          "locator": "tracker:weforge/meta#41",
+          "excerpt_or_detail": "Outage reported May 12; issue closed May 14 with no resolution comment. No postmortem was looked for and found — none is linked from the issue."
+        },
+        {
+          "locator": "docs/ops-journal.md",
+          "excerpt_or_detail": "No journal entry exists between May 12 and May 27; the recovery window is silent."
+        }
+      ]
+    },
+    {
+      "candidate_id": "weforge-001-c4",
+      "kind": "development",
+      "headline": "CI minutes triple in week four",
+      "summary": "Repository activity suggests rapid CI growth at the end of the window; quantifying it needs corpus the brief did not point at.",
+      "source_trail": [
+        {
+          "locator": "git:forge/weforge.git (workflow history)",
+          "excerpt_or_detail": "Workflow configuration churn across week four consistent with CI load growth."
+        }
+      ]
+    }
+  ]
+}

@@ -39,6 +39,58 @@ produced by `publish`, carried by the orchestrator into the next issue's
 workspace as `survey`'s continuity input. The cross-issue loop is not a runa
 edge; it is an orchestrator-carried baton.
 
+## Running an issue
+
+One Gazette issue is one runa run in a fresh workspace.
+
+1. Initialize a workspace on the gazette methodology (from an empty
+   directory; `<gazette>` is this repository's path):
+
+   ```sh
+   runa init --methodology <gazette>/manifest.toml
+   ```
+
+2. Deliver the commission — a `brief` artifact. The worked example provides
+   a valid one:
+
+   ```sh
+   mkdir -p .runa/workspace/brief
+   cp <gazette>/examples/weforge-001/brief/weforge-001.json .runa/workspace/brief/
+   runa scan && runa state
+   ```
+
+   `runa state` now reports `survey` READY and everything else WAITING.
+
+3. Drive the run with your agent command (see
+   [runa's CLI reference](https://github.com/tesserine/runa/blob/main/docs/cli-reference.md));
+   runa chains survey → report → edit → write → factcheck → publish from
+   the artifact graph:
+
+   ```sh
+   runa run --agent-command -- <agent argv>
+   ```
+
+   Success criterion: `runa run` exits `0`, and the workspace contains a
+   valid `issue` artifact and the `ledger` singleton.
+
+4. For the next issue, start a fresh workspace and carry the ledger in as
+   survey's continuity input
+   (`.runa/workspace/ledger/ledger.json`) before delivering the new brief.
+
+## The artifact graph
+
+| Protocol | Requires | Accepts | Produces | Triggered by |
+|----------|----------|---------|----------|--------------|
+| survey | brief | ledger | beat | brief |
+| report | beat | — | dispatch | beat |
+| edit | beat, dispatch | — | lineup | dispatch |
+| write | lineup, dispatch | — | draft | lineup |
+| factcheck | draft, dispatch | — | grounding | draft |
+| publish | draft, grounding, lineup, beat | — | issue, ledger | grounding |
+
+The schema for each artifact (in `schemas/`) names its producer and
+consumers in its `description`.
+
 ## What the repo contains
 
 | Path | Contains |
@@ -46,6 +98,8 @@ edge; it is an orchestrator-carried baton.
 | `manifest.toml` | Artifact types and protocol declarations |
 | `schemas/` | JSON Schema contract for each of the eight artifact types |
 | `protocols/` | Six protocol definitions, one per stage |
+| `examples/weforge-001/` | A complete worked issue: brief through published issue and ledger ([guide](examples/weforge-001/README.md)) |
+| `tests/` | Schema validity + example conformance gate (`python3 -m unittest discover -s tests`) |
 
 ## Reporting under imperfect archives (v0.2)
 
@@ -72,3 +126,8 @@ output shows what the surrounding system preserves, misses, and cannot ground.
 
 v0.2 ships no skills. For how a runa methodology is structured, see runa's
 [methodology authoring guide](https://github.com/tesserine/runa/blob/main/docs/methodology-authoring-guide.md).
+
+Principles: [pentaxis93/principles](https://github.com/pentaxis93/principles)
+— the canonical corpus governing the ecosystem's decisions. Ecosystem
+conventions and the source-of-truth map:
+[tesserine/commons](https://github.com/tesserine/commons).

@@ -1,0 +1,12 @@
+{
+  "issue_id": "weforge-001",
+  "chronicle": "the WeForge forge platform",
+  "scope_intent": "WeForge's founding period: the platform's launch, its first services, and its early operational record.",
+  "corpus_pointers": [
+    "git:forge/weforge.git",
+    "tracker:weforge/meta",
+    "docs/ops-journal.md"
+  ],
+  "publication_target": "publications/weforge-gazette/issues/001.md",
+  "context": "First issue of the chronicle; no prior ledger exists. The commissioner cares most about what the record preserves and what it already fails to preserve."
+}
