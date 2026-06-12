@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README "Running an issue" quickstart and an artifact-graph table
   (protocol × requires/accepts/produces/trigger).
 - `LICENSE` (MIT) and this changelog.
+- README pointer to the canonical principles corpus
+  (`pentaxis93/principles`) and to commons (#5).
 
 ## [0.2.0] — 2026-05-24
 

@@ -126,3 +126,8 @@ output shows what the surrounding system preserves, misses, and cannot ground.
 
 v0.2 ships no skills. For how a runa methodology is structured, see runa's
 [methodology authoring guide](https://github.com/tesserine/runa/blob/main/docs/methodology-authoring-guide.md).
+
+Principles: [pentaxis93/principles](https://github.com/pentaxis93/principles)
+— the canonical corpus governing the ecosystem's decisions. Ecosystem
+conventions and the source-of-truth map:
+[tesserine/commons](https://github.com/tesserine/commons).
