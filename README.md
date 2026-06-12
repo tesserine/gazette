@@ -1,15 +1,27 @@
 # Gazette
 
+**The existence proof that methodologies generalize: honest journalism from
+imperfect archives, enforced by the same runtime that ships software.**
+
 Gazette is a methodology plugin for [runa](https://github.com/tesserine/runa),
 a cognitive runtime for AI agents. It encodes how a *periodical chronicle* is
 produced — researched, edited, written, verified, and published — into
 protocols and artifact schemas that a runa instance orchestrates. It is not a
 runtime or a framework; it is a methodology definition, a sibling of
-[groundwork](https://github.com/tesserine/groundwork).
+[groundwork](https://github.com/tesserine/groundwork) — and the demonstration
+that the [Tesserine](https://github.com/tesserine) stack's guarantees are not
+about code at all. The same engine that gates a merge on test evidence here
+gates publication on per-claim source verification, unchanged.
 
 Where groundwork carries software from problem to merged change, Gazette
 carries a historical record to a published newspaper issue, and maintains
-continuity from one issue to the next.
+continuity from one issue to the next. Its discipline is the journalistic
+grounding floor made mechanical: every claim carries a source trail, claims
+the record only partially supports are published *qualified* with their
+limits visible to the reader, and materially relevant silences in the record
+become stories themselves. That last move makes Gazette an observability
+instrument as much as a publication — its output reports what the
+surrounding system preserves, misses, and cannot ground.
 
 ## The shape of the methodology
 
@@ -130,4 +142,4 @@ v0.2 ships no skills. For how a runa methodology is structured, see runa's
 Principles: [pentaxis93/principles](https://github.com/pentaxis93/principles)
 — the canonical corpus governing the ecosystem's decisions. Ecosystem
 conventions and the source-of-truth map:
-[tesserine/commons](https://github.com/tesserine/commons).
+[commons SOURCE-OF-TRUTH.md](https://github.com/tesserine/commons/blob/main/SOURCE-OF-TRUTH.md).
